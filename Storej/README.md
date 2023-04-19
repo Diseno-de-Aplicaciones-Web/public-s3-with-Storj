@@ -1,10 +1,17 @@
-# Configurando un bucket público en Storej
+# Configurando un bucket público en Storj
 
-```
-access grant:
-15M6fjpDJPD7y9xKx4CaWvgEBH...pAyXeThR1HKrCZAbaZ2h5E8jru2kExFn23pbAPLTFC4jFtRn8nS
-```
-=================================
+## Creación de una cuenta en Storj
+
+Empieza por crear una cuenta en [Storj](https://storj.io)
+
+## Instala y configura `uplink`
+
+`uplink` es la herramienta de linea de comando que nos permite acceder a todo el potencial de Storj.
+
+Para poder usarlo tendrás que obtener un **access grant** en tu panel de Storj. Puedes guiarte mediantes esta animación:
+![](video.gif)
+
+Puedes [descargar e instalar `uplink` desde este enlace](https://docs.storj.io/dcs/getting-started/quickstart-uplink-cli/prerequisites)
 
 ## Añadimos las credenciales de acceso a `uplink`
 ```sh
