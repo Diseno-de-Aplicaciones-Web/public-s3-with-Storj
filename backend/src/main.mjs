@@ -1,38 +1,24 @@
 import express from 'express'
 import cors from "cors"
-import { PutObjectCommand } from "@aws-sdk/client-s3";
-import { myS3Client} from "./lib/s3/client.mjs"
+//import { PutObjectCommand } from "@aws-sdk/client-s3";
+//import { myS3Client} from "./lib/storj-s3.mjs"
+import StorejS3 from './lib/storj-s3.mjs'
 
 const app = new express()
 app.use(cors())
 
-app.post("/upload/:articleId/:fileName", async (req, res)=>{
+const s3client = new StorejS3("proxecto")
+
+app.post("/ficheiros/:nomeDoFicheiro", async (peticion, resposta)=>{
     try {
+
+        const resultado = await s3client.put(peticion.params.nomeDoFicheiro, peticion)
+        resposta.sendStatus(resultado.$metadata.httpStatusCode)
+        if (resultado.$metadata.httpStatusCode !== 200 ) console.error(resultado)
         
-        const command = new PutObjectCommand({
-            Bucket: process.env.AWS_BUCKET_NAME,
-            Key: req.params.fileName,
-            Body: req,
-            ContentType: req.headers['content-type'],
-            ContentLength: req.headers['content-length']
-        });
-
-        const data = await myS3Client.send(command);
-
-        console.log(data);
-/*
-        const articulo = Articulo.findByPk(req.params.articleId)
-
-        articulo.createImagen({
-            s3key: data.Key,
-            publicurl: data.Location
-        })
-*/
-        res.sendStatus(201)
-        
-    } catch (err) {
-        console.error(err)
-        res.sendStatus(500)
+    } catch (excepcion) {
+        console.error(excepcion)
+        resposta.sendStatus(500)
     }
 
 })
